@@ -221,3 +221,4 @@ macro(CREATE_VULKAN_EXECUTABLE target)
 endmacro()
 
 CREATE_VULKAN_EXECUTABLE(VulkanStart)
+# Something really trivial and stupid
