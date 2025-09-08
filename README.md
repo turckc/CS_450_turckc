@@ -32,6 +32,16 @@ You will need **version 3.24** or higher.
   * Install Cmake and run it
   * Select ```"Tools" -> "How to Install for Command Line Use"```
   * Copy the second option into a terminal: ```sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install```
+* ***For Linux:***
+  * Install Cmake via your package manager:
+```
+sudo apt install cmake cmake-gui
+```
+  * HOWEVER, check the version:
+```
+cmake --version
+```
+  * If it is LESS than 3.24, you may have to compile and install from source.
 
 
 ### Visual Code
@@ -50,7 +60,11 @@ I strongly recommend Visual Code as your IDE.
 
 Download and install the **Vulkan SDK** for your platform:
 
-* ***For Windows and MacOS:*** Download the installer [here](https://vulkan.lunarg.com/sdk/home) and run it.
+* ***For Windows:*** Download the appropriate installer [here](https://vulkan.lunarg.com/sdk/home) and run it.
+* ***For Mac:*** 
+  * Download the appropriate installer [here](https://vulkan.lunarg.com/sdk/home) and run it.
+  * Open a terminal; the Vulkan SDK has almost certainly been installed to ```$HOME/VulkanSDK/<version number>```, so ```cd``` to that directory.
+  * Run: ```sudo python ./install_vulkan.py```
 * ***For Linux:*** Follow instructions found [here](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html).
 
 ### Other Libraries
