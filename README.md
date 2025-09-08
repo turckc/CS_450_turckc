@@ -15,9 +15,9 @@ The rest of the dependencies will be automatically fetched by CMake.
 
 ### C++ Compilers
 * ***For Windows:*** Download and install ONE of the following:
-  * [Visual Studio 2022](https://visualstudio.microsoft.com/) (and install the C++ toolchain) ***(STRONGLY recommended if you are taking another class with me)***
+  * [Visual Studio 2022](https://visualstudio.microsoft.com/) (and install the Desktop C++ toolchain) ***(STRONGLY recommended if you are taking another class with me)***
   * [Build Tools for Visual Studio 2022](https://aka.ms/vs/17/release/vs_BuildTools.exe
-  ) 
+  ) (and install the Desktop C++ toolchain)
 * ***For Linux:*** Install g++ compilers if not already installed.
 * ***For Mac:*** The included Clang g++ compilers should be fine.
 
