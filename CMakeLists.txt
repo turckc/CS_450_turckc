@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.24)
 project(CS_450_Assignments)
 
 set(CMAKE_INSTALL_PREFIX .)
+#set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/Users/caden" CACHE STRING "Prefix paths" FORCE)
 
 #####################################
 # Require C++17
@@ -220,4 +221,7 @@ macro(CREATE_VULKAN_EXECUTABLE target)
     install(DIRECTORY ${PROJECT_BINARY_DIR}/compiledshaders/${target} DESTINATION bin/${target}/build/compiledshaders)
 endmacro()
 
-CREATE_VULKAN_EXECUTABLE(VulkanStart)
+#CREATE_VULKAN_EXECUTABLE(VulkanStart)
+
+CREATE_VULKAN_EXECUTABLE(Exercises03)
+#CREATE_VULKAN_EXECUTABLE(Exercises04)

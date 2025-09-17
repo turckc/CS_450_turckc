@@ -2,7 +2,7 @@
 using namespace std;
 
 int main(int argc, char **argv) {
-    cout << "BEGIN FORGING!!!" << endl;
+    cout << "BEGIN FORGING AGAIN!!!" << endl;
 
     // Set name
     string appName = "VulkanStart";
