@@ -40,8 +40,8 @@ void listAvailablePhysicalDevices(VulkanInitData &vkInitData) {
 int main(int argc, char **argv) {
     cout << "BEGIN VULKAN EXERCISE" << endl;
 
-    string appName = "Assign01: ";
-    string windowTitle = appName + "turckc";
+    string appName = "Assign01";
+    string windowTitle = appName + ": turckc";
     int windowWidth = 640;
     int windowHeight = 480;
 
