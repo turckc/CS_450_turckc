@@ -36,8 +36,19 @@ namespace student {
         vk::Device device {};
 
         VulkanSwapChain swapchain {};
+
+        VulkanQueue graphicsQueue {};
+        VulkanQueue presentQueue {};
     };
 
+    struct VulkanQueue {
+        vk::Queue queue {};
+        unsigned int index = 0;
+    };
+
+    bool getVulkanQueue(vkb::Device vkbDevice,
+                        vkb::QueueType queueType,
+                        VulkanQueue &queueData);
     bool createVulkanSwapchain(VulkanInitData &vkInitData);
     void recreateVulkanSwapchain(VulkanInitData &vkInitData);
     void cleanupVulkanSwapchain(VulkanInitData &vkInitData);

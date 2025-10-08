@@ -12,18 +12,18 @@ namespace student {
             cerr << "ERROR: " << swapRet.error().message() << endl;
             return false;
         }
-    vkb ::Swapchain vkbSwapchain = swapRet. value();
-    vkInitData.swapchain.chain = vk::SwapchainKHR { vkbSwapchain.swapchain };
-    vkInitData.swapchain.extent = vk::Extent2D { vkbSwapchain.extent };
-    vkInitData.swapchain.format = vk::Format(vkbSwapchain.image_format);
+        vkb ::Swapchain vkbSwapchain = swapRet. value();
+        vkInitData.swapchain.chain = vk::SwapchainKHR { vkbSwapchain.swapchain };
+        vkInitData.swapchain.extent = vk::Extent2D { vkbSwapchain.extent };
+        vkInitData.swapchain.format = vk::Format(vkbSwapchain.image_format);
     
-    vector<VkImage> vkImages = vkbSwapchain.get_images().value();
-    vector<VkImageView> vkView = vkbSwapchain.get_image_views().value();
-    for (int i = 0; i < vkImages.size(); i++) {
-        vkInitData.swapchain.images.push_back(vk::Image { vkImages.at(i) });
-        vkInitData.swapchain.views.push_back(vk::ImageView { vkView.at(i) });
-    }
-    return true;
+        vector<VkImage> vkImages = vkbSwapchain.get_images().value();
+        vector<VkImageView> vkView = vkbSwapchain.get_image_views().value();
+        for (int i = 0; i < vkImages.size(); i++) {
+            vkInitData.swapchain.images.push_back(vk::Image { vkImages.at(i) });
+            vkInitData.swapchain.views.push_back(vk::ImageView { vkView.at(i) });
+        }
+        return true;
 
     }
 
@@ -100,14 +100,41 @@ namespace student {
     vkb::Device vkbDevice = devRet.value();
     vkInitData.device = vk::Device { vkbDevice.device };
     vkInitData.bootDevice = vkbDevice;
+    
+    createVulkanSwapchain(vkInitData);
+
+    // Get queues
+    getVulkanQueue(vkbDevice, vkb::QueueType::graphics,
+                    vkInitData.graphicsQueue);
+    getVulkanQueue(vkbDevice, vkb::QueueType::present,
+                    vkInitData.presentQueue);
+
     return true;
 
     }
 
     void cleanupVulkanSetup(VulkanInitData &vkInitData) {
+        cleanupVulkanSwapchain(vkInitData);
         vkInitData.device.destroy();
         vkInitData.instance.destroySurfaceKHR(vkInitData.surface);
         vkb::destroy_instance(vkInitData.bootInstance);
+    }
+
+    bool getVulkanQueue(vkb::Device vkbDevice,
+                        vkb::QueueType queueType,
+                        VulkanQueue &queueData) {
+        // Get the desired queue
+        auto queueRet = vkbDevice.get_queue(queueType);
+        if(!queueRet) {
+            cerr << "Error: " << queueRet.error().message() << endl;
+            return false;
+        }
+        // Convert to vk::Queue
+        queueData.queue = vk::Queue { queueRet.value() };
+        // Get queue index
+        queueData.index = vkbDevice.get_queue_index(queueType).value();
+        // Success!
+        return true;
     }
 
 
