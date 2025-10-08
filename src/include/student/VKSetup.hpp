@@ -29,6 +29,9 @@ namespace student {
 
         vk::SurfaceKHR surface {};
 
+        //Added Phyiscal Device
+        vk::PhysicalDevice physicalDevice {};
+
         vkb::Device bootDevice {};
         vk::Device device {};
 

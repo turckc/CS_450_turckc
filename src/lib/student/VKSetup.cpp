@@ -73,11 +73,39 @@ namespace student {
     }
     vkInitData.surface = vk::SurfaceKHR { surface };
 
+    vk::PhysicalDeviceFeatures reqFeatures {};
+    reqFeatures.samplerAnisotropy = true;
+    vk::PhysicalDeviceVulkan13Features reqFeatures13;
+    reqFeatures13.dynamicRendering = true;
+    reqFeatures13.synchronization2 = true;
+    vkb::PhysicalDeviceSelector selector { vkbInstance };
+    selector.set_surface(surface);
+    selector.set_minimum_version(vkInitData.minVersionMajor,
+        vkInitData.minVersionMinor);
+    selector.set_required_features(reqFeatures);
+    selector.set_required_features_13(reqFeatures13);
+    auto physRet = selector.select();
+    if(!physRet) {
+        cerr << "Error: " << physRet.error().message() << endl;
+        return false;
+    }
+    vkb::PhysicalDevice vkbPhysicalDevice = physRet.value();
+    vkInitData.physicalDevice = vk::PhysicalDevice { vkbPhysicalDevice.physical_device };
+    vkb::DeviceBuilder deviceBuilder { vkbPhysicalDevice };
+    auto devRet = deviceBuilder.build();
+    if(!devRet) {
+        cerr << "Error: " << devRet.error().message() << endl;
+        return false;
+    }
+    vkb::Device vkbDevice = devRet.value();
+    vkInitData.device = vk::Device { vkbDevice.device };
+    vkInitData.bootDevice = vkbDevice;
     return true;
 
     }
 
     void cleanupVulkanSetup(VulkanInitData &vkInitData) {
+        vkInitData.device.destroy();
         vkInitData.instance.destroySurfaceKHR(vkInitData.surface);
         vkb::destroy_instance(vkInitData.bootInstance);
     }

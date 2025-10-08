@@ -40,8 +40,9 @@ void listAvailablePhysicalDevices(VulkanInitData &vkInitData) {
 int main(int argc, char **argv) {
     cout << "BEGIN VULKAN EXERCISE" << endl;
 
-    string appName = "Assign01: ";
-    string windowTitle = appName + "turckc";
+    //Changed structuring of appName and windowTitle name
+    string appName = "Assign01";
+    string windowTitle = appName + ": turckc";
     int windowWidth = 640;
     int windowHeight = 480;
 
@@ -68,6 +69,8 @@ int main(int argc, char **argv) {
             << VK_VERSION_MINOR(apiVersion) << "."
             << VK_VERSION_PATCH(apiVersion) << endl;
 
+    cout << "** Chosen Physical Device: *********" << endl;
+    printPhysicalDeviceProperties(vkInitData.physicalDevice);
 
     //while(!glfwWindowShouldClose(window)) {
     //    glfwPollEvents();
