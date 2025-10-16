@@ -9,5 +9,5 @@ void main() {
     vec4 finalColor = fragColor;
     
     // Output final color
-    outColor = finalColor;
+    outColor = vec4(1.0, 0, 0, 1.0);
 } 

@@ -17,6 +17,11 @@ namespace student {
         vk::Format format {};
     };
 
+    struct VulkanQueue {
+        vk::Queue queue {};
+        unsigned int index = 0;
+    };
+
 
     struct VulkanInitData {
         string appName = "";
@@ -41,10 +46,7 @@ namespace student {
         VulkanQueue presentQueue {};
     };
 
-    struct VulkanQueue {
-        vk::Queue queue {};
-        unsigned int index = 0;
-    };
+
 
     bool getVulkanQueue(vkb::Device vkbDevice,
                         vkb::QueueType queueType,

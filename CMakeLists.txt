@@ -239,6 +239,7 @@ CREATE_VULKAN_EXECUTABLE(Assign01)
 CREATE_VULKAN_EXECUTABLE(VulkanStart)
 CREATE_VULKAN_EXECUTABLE(Exercises04)
 CREATE_VULKAN_EXECUTABLE(Exercises05)
+CREATE_VULKAN_EXECUTABLE(Exercises06)
 # Something really trivial and stupid
 # More executables to come!
 # CREATE_VULKAN_EXECUTABLE(ProfExercises03)
