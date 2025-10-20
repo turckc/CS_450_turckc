@@ -37,9 +37,6 @@ namespace student {
 
         vk::PipelineVertexInputStateCreateInfo vertexInputInfo(
             {}, creationInfo.bindDesc, creationInfo.attribDesc);
-
-        cleanupVulkanShaderModule(vkInitData, fragShaderModule);
-        cleanupVulkanShaderModule(vkInitData, vertShaderModule);
         
         vk::PipelineInputAssemblyStateCreateInfo inputAssembly(
             {}, vk::PrimitiveTopology::eTriangleList, false);
@@ -119,6 +116,9 @@ namespace student {
         }
         // Set pipeline
         data.graphicsPipeline = ret.value;
+
+        cleanupVulkanShaderModule(vkInitData, fragShaderModule);
+        cleanupVulkanShaderModule(vkInitData, vertShaderModule);
 
         // Return data
         return data;
