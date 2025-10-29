@@ -244,3 +244,4 @@ int main(int argc, char **argv) {
     cleanupGLFWWindow(window);
     return 0;
 }
+
