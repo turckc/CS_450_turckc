@@ -109,11 +109,19 @@ namespace student {
     getVulkanQueue(vkbDevice, vkb::QueueType::present,
                     vkInitData.presentQueue);
 
+    VmaAllocatorCreateInfo allocatorInfo{};
+    allocatorInfo.instance = vkbInstance.instance;
+    allocatorInfo.physicalDevice = vkbPhysicalDevice.physical_device;
+    allocatorInfo.device = vkbDevice.device;
+
+    vmaCreateAllocator(&allocatorInfo, &(vkInitData.allocator));
+
     return true;
 
     }
 
     void cleanupVulkanSetup(VulkanInitData &vkInitData) {
+        vmaDestroyAllocator(vkInitData.allocator);
         cleanupVulkanSwapchain(vkInitData);
         vkInitData.device.destroy();
         vkInitData.instance.destroySurfaceKHR(vkInitData.surface);

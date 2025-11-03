@@ -28,6 +28,8 @@ namespace student {
         int minVersionMajor = 1;
         int minVersionMinor = 3;
 
+        VmaAllocator allocator {};
+
         vkb::Instance bootInstance {};
         vk::Instance instance {};
         GLFWwindow *window = nullptr;
