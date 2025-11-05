@@ -4,6 +4,7 @@
 #include "student/VKCommand.hpp"
 #include "student/VKImage.hpp"
 #include "student/VKPipeline.hpp"
+#include "student/VKMesh.hpp"
 
 using namespace std;
 using namespace student;
@@ -48,7 +49,8 @@ void recordCommands( VulkanInitData &vkInitData,
                         uint32_t indexSwap,
                         vk::CommandBuffer &commandBuffer,
                         vk::QueryPool &queryPool,
-                        VulkanPipelineData &pipelineData) {
+                        VulkanPipelineData &pipelineData,
+                        VulkanMesh &mesh) {
         commandBuffer.begin(vk::CommandBufferBeginInfo());
         commandBuffer.resetQueryPool(queryPool, 0, 2);
         commandBuffer.writeTimestamp2(
@@ -94,6 +96,8 @@ void recordCommands( VulkanInitData &vkInitData,
         vk::Rect2D scissors[]
         = {{{0,0}, vkInitData.swapchain.extent}};
         commandBuffer.setScissor(0, scissors);
+
+        recordDrawVulkanMesh(commandBuffer, mesh);
 
         commandBuffer.endRendering();
 
@@ -161,7 +165,6 @@ int main(int argc, char **argv) {
         glm::vec3 pos;
     };
 
-
     VulkanPipelineCreationInfo pipelineCreateInfo{};
     pipelineCreateInfo.vertSPVFilename
         = "build/compiledshaders/" + appName + "/shader.vert.spv";
@@ -189,6 +192,32 @@ int main(int argc, char **argv) {
     VulkanPipelineData pipelineData
         = createBasicVulkanPipeline(vkInitData, pipelineCreateInfo);
 
+    HostMesh<ForgeVertex> hostMesh {};
+    hostMesh.vertices = {
+            {{-0.5f, -0.5f, 0.5f}},
+            {{0.5f, -0.5f, 0.5f}},
+            {{0.5f, 0.5f, 0.5f}},
+            {{-0.5f, 0.5f, 0.5f}}
+        };
+    hostMesh.indices = { 0, 2, 1, 2, 0, 3 };
+
+    bool useStaging = true;
+    // Start staging copies
+    VulkanStagingData stagingData {};
+    if(useStaging) {
+        stagingData = beginStagingVulkanBufferCopies(vkInitData,
+                                                    commandData.commandPool);
+    }
+    // Create Vulkan Mesh
+    VulkanMesh mesh = createVulkanMesh(vkInitData, hostMesh, useStaging);
+    // Copy data
+    copyToVulkanMesh(vkInitData, mesh, hostMesh, useStaging, stagingData);
+    // End staging
+    if(useStaging) {
+        endStagingVulkanBufferCopies( vkInitData, commandData.commandPool,
+                                        stagingData);
+    }
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         uint32_t indexFIF = framesRendered % commandData.numberFramesInFlight;
@@ -198,7 +227,8 @@ int main(int argc, char **argv) {
         recordCommands(vkInitData, indexFIF, indexSwap,
                         commandData.perFIF[indexFIF].commandBuffer,
                         queryPools.at(indexFIF),
-                        pipelineData);
+                        pipelineData,
+                        mesh);
 
         // TODO SUBMIT ACTUAL COMMANDS
         submitToGraphicsQueue(vkInitData, commandData, indexFIF, indexSwap);
@@ -228,6 +258,8 @@ int main(int argc, char **argv) {
     }
 
     vkInitData.device.waitIdle();
+
+    cleanupVulkanMesh(vkInitData, mesh);
 
     cleanupVulkanPipeline(vkInitData, pipelineData);
 
