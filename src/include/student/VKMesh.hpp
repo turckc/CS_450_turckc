@@ -51,11 +51,12 @@ namespace student {
     template<typename T>
     void copyToVulkanMesh( VulkanInitData &vkInitData, VulkanMesh &mesh,
                             HostMesh<T> &hostMesh, bool useStaging,
-                            VulkanStagingData &stagingData = nullptr)
+                            VulkanStagingData *stagingData = nullptr)
+    {
         if(useStaging) {
-            copyToDeviceLocalVulkanBuffer(vkInitData, stagingData, mesh.vertices,
+            copyToDeviceLocalVulkanBuffer(vkInitData, *stagingData, mesh.vertices,
                                             hostMesh.vertices.data());
-            copyToDeviceLocalVulkanBuffer(vkInitData, stagingData, mesh.indices,
+            copyToDeviceLocalVulkanBuffer(vkInitData, *stagingData, mesh.indices,
                                             hostMesh.indices.data());
         }
         else {

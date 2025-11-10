@@ -211,7 +211,7 @@ int main(int argc, char **argv) {
     // Create Vulkan Mesh
     VulkanMesh mesh = createVulkanMesh(vkInitData, hostMesh, useStaging);
     // Copy data
-    copyToVulkanMesh(vkInitData, mesh, hostMesh, useStaging, stagingData);
+    copyToVulkanMesh(vkInitData, mesh, hostMesh, useStaging, &stagingData);
     // End staging
     if(useStaging) {
         endStagingVulkanBufferCopies( vkInitData, commandData.commandPool,
