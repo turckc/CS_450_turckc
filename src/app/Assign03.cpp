@@ -262,7 +262,7 @@ int main(int argc, char **argv) {
         double nsPerTick = props.limits.timestampPeriod;
         double deltaNs = (timestamps[1] - timestamps[0]) * nsPerTick;
         
-        cout << "TIME for FIF " << indexFIF << ": " << deltaNs << endl;
+        //cout << "TIME for FIF " << indexFIF << ": " << deltaNs << endl;
 
         framesRendered++;
     }
