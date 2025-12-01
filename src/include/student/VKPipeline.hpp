@@ -22,6 +22,8 @@ namespace student {
         vector<vk::VertexInputAttributeDescription> attribDesc{};
 
         vk::PipelineRenderingCreateInfo renderInfo {};
+
+        vector<vk::PushConstantRange> pushConstantRanges {};
     };
 
     struct VulkanPipelineData {

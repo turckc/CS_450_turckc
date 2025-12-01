@@ -84,7 +84,7 @@ namespace student {
             false, {}, {} // Not using stencil test
         );
 
-        vk::PipelineLayoutCreateInfo pipelineLayoutInfo({}, {}, {});
+        vk::PipelineLayoutCreateInfo pipelineLayoutInfo({}, {}, creationInfo.pushConstantRanges);
         data.pipelineLayout
             = vkInitData.device.createPipelineLayout(pipelineLayoutInfo);
 
