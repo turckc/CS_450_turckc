@@ -79,10 +79,11 @@ void printRM(string name, glm::mat4 &M) {
     }
 }
 
+
 static void key_callback(GLFWwindow* window,
                             int key, int scancode,
                             int action, int mods) {
-    if (action == GLFW_PRESS && key == GLFW_KEY_ESCAPE) {
+    if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         if(key == GLFW_KEY_ESCAPE) {
             glfwSetWindowShouldClose(window, 1);
         }
@@ -450,7 +451,7 @@ int main(int argc, char **argv) {
         double nsPerTick = props.limits.timestampPeriod;
         double deltaNs = (timestamps[1] - timestamps[0]) * nsPerTick;
         
-        cout << "TIME for FIF " << indexFIF << ": " << deltaNs << endl;
+        //cout << "TIME for FIF " << indexFIF << ": " << deltaNs << endl;
 
         framesRendered++;
     }
